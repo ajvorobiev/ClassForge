@@ -24,7 +24,7 @@ namespace ClassForge
         /// <summary>
         /// The top of the tree
         /// </summary>
-        private GOLD.Reduction root;
+        public GOLD.Reduction Root { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CfgParser"/> class.
@@ -64,7 +64,6 @@ namespace ClassForge
             // 
             // The resulting tree will be a pure representation of the language 
             // and will be ready to implement.
-            GOLD.ParseMessage response;
 
             bool accepted = false;          // Was the parse successful?
 
@@ -76,7 +75,7 @@ namespace ClassForge
             // perfomr the parsing
             while (!done)
             {
-                response = this.parser.Parse();
+                var response = this.parser.Parse();
 
                 switch (response)
                 {
@@ -104,7 +103,7 @@ namespace ClassForge
 
                     case GOLD.ParseMessage.Accept:
                         // Accepted!
-                        this.root = (GOLD.Reduction)this.parser.CurrentReduction;    // The root node!                                  
+                        this.Root = (GOLD.Reduction)this.parser.CurrentReduction;    // The Root node!                                  
                         done = true;
                         accepted = true;
                         break;

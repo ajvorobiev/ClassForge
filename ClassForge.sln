@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassForge", "ClassForge\ClassForge.csproj", "{9F45EE64-BA8B-440F-B1BE-32B003C06937}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassForge.Test", "ClassForge.Test\ClassForge.Test.csproj", "{D59EB37D-057A-4F44-801D-9DF1A1DC97A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassForgeTester", "ClassForgeTester\ClassForgeTester.csproj", "{D53B3E0E-18D0-4CB1-8EAC-9DD3C4444CA1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +17,14 @@ Global
 		{9F45EE64-BA8B-440F-B1BE-32B003C06937}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F45EE64-BA8B-440F-B1BE-32B003C06937}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F45EE64-BA8B-440F-B1BE-32B003C06937}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D59EB37D-057A-4F44-801D-9DF1A1DC97A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D59EB37D-057A-4F44-801D-9DF1A1DC97A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D59EB37D-057A-4F44-801D-9DF1A1DC97A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D59EB37D-057A-4F44-801D-9DF1A1DC97A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D53B3E0E-18D0-4CB1-8EAC-9DD3C4444CA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D53B3E0E-18D0-4CB1-8EAC-9DD3C4444CA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D53B3E0E-18D0-4CB1-8EAC-9DD3C4444CA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D53B3E0E-18D0-4CB1-8EAC-9DD3C4444CA1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
