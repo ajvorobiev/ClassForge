@@ -27,9 +27,9 @@ namespace ClassForge
                 var newClass = new ClassForge.Model.Class();
                 newClass.Name = match.Groups[1].Value;
                 newClass.Inherits = match.Groups[2].Value;
-                newClass.InternalText = match.Groups[3].Value;
+                newClass.InternalText = match.Groups[7].Value;
 
-                ParseClassForClasses(newClass.InternalText, ref newClass);
+                this.ParseClassForClasses(newClass.InternalText, ref newClass);
 
                 model.Classes.Add(newClass);
             }
@@ -46,9 +46,9 @@ namespace ClassForge
                 var newClass = new ClassForge.Model.Class();
                 newClass.Name = match.Groups[1].Value;
                 newClass.Inherits = match.Groups[2].Value;
-                newClass.InternalText = match.Groups[3].Value;
+                newClass.InternalText = match.Groups[7].Value;
 
-                ParseClassForClasses(newClass.InternalText, ref newClass);
+                this.ParseClassForClasses(newClass.InternalText, ref newClass);
 
                 parentclass.Classes.Add(newClass);
             }

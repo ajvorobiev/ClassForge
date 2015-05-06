@@ -8,7 +8,6 @@ namespace ClassForge
 {
     public static class ParserRules
     {
-        public static string ClassRule = @"(?=\{((?:[^{}]+|\{(?<1>)\})+)\}\;)";//(?:class\s([a-zA-Z_\d]+)\s?:?\s?([a-zA-Z_\d]+)?\s?\n?\r?(?=\{((?:[^{}]++|\{(?1)\})++)\}) @"class\s([a-zA-Z_\d]+)\s?:?\s?([a-zA-Z_\d]+)?\s?\n?\r?{\n?\r?([a-zA-Z_\d\s\n\r\=\;\$\""\\\.\:\{\/\!\-\>\[\]\,\}\*]+)?};";
-
+        public static string ClassRule = @"class\s([a-zA-Z_\d]+)\s?:?\s?([a-zA-Z_\d]+)?\s?\n?\r?[^\{\}]*(((?'Open'\{)[^\{\}]*)+((?'Close-Open'\})[^\{\}]*)+)*(?('Open')(?!))"; // class\s([a-zA-Z_\d]+)\s?:?\s?([a-zA-Z_\d]+)?\s?\n?\r?[^\{\}]*(((?'Open'\{)[^\{\}]*)+((?'Close-Open'\})[^\{\}]*)+)*(?('Open')(?!))
     }
 }
