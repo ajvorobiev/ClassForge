@@ -43,6 +43,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CfgParser.cs" />
+    <Compile Include="CfgSimpleParser.cs" />
+    <Compile Include="Model\Class.cs" />
+    <Compile Include="Model\ClassCollection.cs" />
+    <Compile Include="Model\IClassCollection.cs" />
+    <Compile Include="Model\Model.cs" />
+    <Compile Include="ParserRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
