@@ -26,7 +26,9 @@ namespace ClassForge.Test
         public void TextParserTest()
         {
             var parser = new CfgSimpleParser();
-            parser.Parse("files\\config.cpp");
+            parser.Parse("files\\config2.cpp");
+
+            Console.WriteLine(parser.Model);
         }
 
     }
