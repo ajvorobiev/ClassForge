@@ -27,7 +27,7 @@ namespace ClassForge.Test
         public void TextParserTest()
         {
             var parser = new CfgSimpleParser();
-            parser.Parse("files\\config2.cpp");
+            parser.Parse("files\\config.cpp");
 
             var indent = 1;
 
