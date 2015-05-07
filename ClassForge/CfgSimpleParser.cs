@@ -1,32 +1,66 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using ClassForge.Model;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="CfgSimpleParser.cs" company="Red Hammer Studios">
+//   Copyright (c) 2015 Red Hammer Studios
+// </copyright>
+// <summary>
+//   The simple regex config parser.
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
 namespace ClassForge
 {
     using System.IO;
+    using System.Text.RegularExpressions;
+    using Model;
 
+    /// <summary>
+    /// The simple regex config parser.
+    /// </summary>
     public class CfgSimpleParser
     {
-
+        /// <summary>
+        /// Gets or sets the model.
+        /// </summary>
         public Model.Model Model { get; set; }
 
+        /// <summary>
+        /// Parses the specified file.
+        /// </summary>
+        /// <param name="path">
+        /// The path of the file.
+        /// </param>
         public void Parse(string path)
         {
             var stringText = File.ReadAllText(path);
 
             this.Model = new Model.Model();
 
-            ParseTextForClasses(stringText);
+            this.ParseTextForProperties(stringText);
+
+            //this.ParseTextForClasses(stringText);
         }
 
+        private void ParseTextForProperties(string stringText)
+        {
+            var matches = Regex.Matches(stringText, ParserRules.PropertyRule, RegexOptions.IgnoreCase);
+            <Parameter Name="${Name}" Value="${Value}" />
+            foreach (var match in matches)
+            {
+                
+            }
+        }
+
+        /// <summary>
+        /// Parses the text directly to the top level model
+        /// </summary>
+        /// <param name="text">
+        /// The text.
+        /// </param>
         public void ParseTextForClasses(string text)
         {
-            int innerIndex = 7;
-
             // Here we call Regex.Match.
-            MatchCollection matches = Regex.Matches(text, ParserRules.ClassRule, RegexOptions.Multiline);
-            var solitaryMode = false;
+            var matches = Regex.Matches(text, ParserRules.ClassRule, RegexOptions.Multiline);
+            
             if (matches.Count == 0)
             {
                 matches = Regex.Matches(text, ParserRules.ClassRuleSolitary, RegexOptions.Multiline);
@@ -34,48 +68,42 @@ namespace ClassForge
                 {
                     return;
                 }
-                else
-                {
-                    solitaryMode = true;
-                }
             }
 
             foreach (Match match in matches)
             {
-                var newClass = new ClassForge.Model.Class();
-                newClass.Name = match.Groups["Name"].Value;
-                newClass.Inherits = match.Groups["Inherit"].Value;
-                newClass.InternalText = match.Groups["Close"].Value;
+                var newClass = new Class
+                {
+                    Name = match.Groups["Name"].Value,
+                    Inherits = match.Groups["Inherit"].Value,
+                    InternalText = match.Groups["Close"].Value,
+                    FullCode = match.Groups["Top"].Value
+                };
 
                 this.ParseClassForClasses(newClass.InternalText, ref newClass);
 
                 this.Model.Classes.Add(newClass);
 
                 // remove the matched class and rerun on the modded text
-                var modedText = text.Replace(match.Value, "");
-                MatchCollection matchesModded = Regex.Matches(modedText, ParserRules.ClassRule, RegexOptions.Multiline);
+                var moddedText = text.Replace(newClass.FullCode, "");
 
-                if (matchesModded.Count == 0)
-                {
-                    matchesModded = Regex.Matches(modedText, ParserRules.ClassRuleSolitary, RegexOptions.Multiline);
-                    if (matchesModded.Count != 0)
-                    {
-                        this.ParseTextForClasses(modedText);
-                    }
-                }
-                else
-                {
-                    this.ParseTextForClasses(modedText);
-                }
+                if (!string.IsNullOrWhiteSpace(moddedText)) this.ParseTextForClasses(moddedText);
             }
         }
 
-        public void ParseClassForClasses(string text, ref Model.Class parentclass)
+        /// <summary>
+        /// Parses a single class for classes.
+        /// </summary>
+        /// <param name="text">
+        /// The text.
+        /// </param>
+        /// <param name="parentclass">
+        /// The parent <see cref="Class"/>.
+        /// </param>
+        public void ParseClassForClasses(string text, ref Class parentclass)
         {
             // Here we call Regex.Match.
-            MatchCollection matches = Regex.Matches(text, ParserRules.ClassRule, RegexOptions.Multiline);
-
-            bool solitaryMode = false;
+            var matches = Regex.Matches(text.TrimEnd(), ParserRules.ClassRule, RegexOptions.Multiline);
 
             if (matches.Count == 0)
             {
@@ -84,29 +112,26 @@ namespace ClassForge
                 {
                     return;
                 }
-                else
-                {
-                    solitaryMode = true;
-                }
             }
 
             foreach (Match match in matches)
             {
-                var newClass = new ClassForge.Model.Class();
-                newClass.Name = match.Groups["Name"].Value;
-                newClass.Inherits = match.Groups["Inherit"].Value;
-                newClass.InternalText = match.Groups["Close"].Value;
-
-                parentclass.Classes.Add(newClass);
+                var newClass = new Class
+                {
+                    Name = match.Groups["Name"].Value,
+                    Inherits = match.Groups["Inherit"].Value,
+                    InternalText = match.Groups["Close"].Value,
+                    FullCode = match.Groups["Top"].Value
+                };
 
                 this.ParseClassForClasses(newClass.InternalText, ref newClass);
 
-                // remove the matched class and rerun on the modded text
-                var modedText = text.Replace(match.Value, "");
+                parentclass.Classes.Add(newClass);
 
-                if(!string.IsNullOrWhiteSpace(modedText)) this.ParseClassForClasses(modedText, ref newClass );
-                
-                
+                // remove the matched class and rerun on the modded text
+                var moddedText = text.Replace(newClass.FullCode, "");
+
+                if (!string.IsNullOrWhiteSpace(moddedText)) this.ParseClassForClasses(moddedText, ref parentclass);
             }
         }
     }
