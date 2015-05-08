@@ -26,6 +26,6 @@ namespace ClassForge
 
         public static string LineCommentSearchPattern = @"\/\/.*";
 
-        public static string DefineSearchPattern = @"^#define\s+(?'Name'\S+)\s+(?'Value'\S+)";
+        public static string DefineMultiSearchPattern = @"#define\s+(?'Name'\S+)\s+(?'Value'(?:[ \t\w\$\#\{|=\;\-\.\""\\:}]*\\[\s]+)+[\S\;]*)";
     }
 }
