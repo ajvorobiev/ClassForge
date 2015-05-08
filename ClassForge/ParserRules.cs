@@ -25,5 +25,7 @@ namespace ClassForge
         public static string BlockCommentSearchPattern = @"/\*(?>(?:(?>[^*]+)|\*(?!/))*)\*/";
 
         public static string LineCommentSearchPattern = @"\/\/.*";
+
+        public static string DefineSearchPattern = @"^#define\s+(?'Name'\S+)\s+(?'Value'\S+)";
     }
 }
