@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ClassForge
+﻿namespace ClassForge
 {
     public static class ParserRules
     {
-        public static string PropertySearchPattern = @"(?'Name'[\w+\[\]]+)[ \t]?=\s*[\{]*\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}]+)?\s*\}?\;([ \t]?///?[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertyArraySearchPattern = @"(?'Name'[\w+]+\[\])[ \t]?=\s*\{\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}]+)?\s*\}\;([ \t]?/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+
+        public static string PropertySearchPattern = @"(?'Name'[\w+]+)[ \t]?=\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}]+)?\s*\;([ \t]?/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         public static string PropertyReplacePattern = @"<Parameter Name=""${Name}"" Value=""${Value}"" Remark=""${Remark}"" />";
 
@@ -27,5 +23,9 @@ namespace ClassForge
         public static string LineCommentSearchPattern = @"\/\/.*";
 
         public static string DefineMultiSearchPattern = @"#define\s+(?'Name'\S+)\s+(?'Value'(?:[ \t\w\$\#\{|=\;\-\.\""\\:}]*\\[\s]+)+[\S\;]*)";
+
+        public static string DefineSearchPattern = @"#define\s+(?'Name'\S+)\s+(?'Value'(?:[ \t\w\$\#\{|=\;\-\.\""\\:}]*))";
+
+        public static string IncludeSearchPattern = @"\#include[ \t]+\""(?'File'[\w+\.]+)\""";
     }
 }

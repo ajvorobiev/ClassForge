@@ -1,4 +1,4 @@
-﻿#include "script_component.hpp"
+﻿#include "macros.hpp"
 #include "script_config.hpp"
 
 /**

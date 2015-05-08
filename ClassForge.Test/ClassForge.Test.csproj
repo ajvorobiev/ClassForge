@@ -56,7 +56,9 @@
     <Content Include="files\config.cpp">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="files\macros.cpp" />
+    <Content Include="files\macros.hpp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ClassForge\ClassForge.csproj">
