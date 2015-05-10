@@ -22,6 +22,12 @@ class CfgPatches
 	};
 };
 
+era_am(12)
+
+era_am(32)
+
+era_am("def")
+
 class DefaultEventhandlers;
 class WeaponFireGun;
 class WeaponCloudsGun;

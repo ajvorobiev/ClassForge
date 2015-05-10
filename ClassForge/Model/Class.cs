@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Xml.Serialization;
+
 namespace ClassForge.Model
 {
     using System.Collections.Generic;
@@ -19,27 +21,25 @@ namespace ClassForge.Model
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
+        [XmlAttribute]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the parent class.
         /// </summary>
+        [XmlAttribute]
         public string Inherits { get; set; }
 
         /// <summary>
-        /// Gets or sets the internal text.
+        /// Gets or sets the remark
         /// </summary>
-        public string InternalText { get; set; }
+        [XmlAttribute]
+        public string Remark { get; set; }
 
         /// <summary>
-        /// Gets or sets the internal properties.
+        /// Gets or sets the list of <see cref="Property"/>'s
         /// </summary>
-        public string InternalProperties { get; set; }
-
-        /// <summary>
-        /// Gets or sets the full code.
-        /// </summary>
-        public string FullCode { get; set; }
+        public List<Property> Properties { get; set; } 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Class"/> class.
@@ -47,34 +47,6 @@ namespace ClassForge.Model
         public Class()
         {
             this.Classes = new List<Class>();
-        }
-
-        /// <summary>
-        /// Outputs a visualization of the class
-        /// </summary>
-        /// <param name="level">
-        /// The level of indentation.
-        /// </param>
-        /// <param name="deep">
-        /// The deep.
-        /// </param>
-        /// <returns>
-        /// The <see cref="Class"/> in the form of "-- name : inheritance"
-        /// </returns>
-        public string StringOutput(int level, bool deep = false)
-        {
-            var indent = string.Empty;
-
-            for (int i = 0; i < level; i++)
-            {
-                indent += "-";
-            }
-
-            var inheritance = string.IsNullOrWhiteSpace(this.Inherits)
-                ? string.Empty
-                : string.Format(" : {0}", this.Inherits);
-
-            return string.Format("{0} {1}{2}\n{3}", indent, this.Name, inheritance, deep ? this.InternalText : string.Empty);
         }
     }
 }

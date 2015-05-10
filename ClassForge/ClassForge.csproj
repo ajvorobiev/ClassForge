@@ -30,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GOLD Engine">
-      <HintPath>lib\GOLD Engine.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -42,22 +39,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CfgParser.cs" />
     <Compile Include="CfgSimpleParser.cs" />
     <Compile Include="Model\Class.cs" />
     <Compile Include="Model\ClassCollection.cs" />
     <Compile Include="Model\IClassCollection.cs" />
+    <Compile Include="Model\Macro.cs" />
     <Compile Include="Model\Model.cs" />
+    <Compile Include="Model\Property.cs" />
     <Compile Include="ParserRules.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="cfggrammar\armaconfig.egt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="cfggrammar\armaconfig.grm">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

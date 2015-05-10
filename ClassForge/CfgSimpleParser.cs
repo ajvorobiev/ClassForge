@@ -7,13 +7,11 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using GOLD;
-
 namespace ClassForge
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.IO;
     using System.Text.RegularExpressions;
     using Model;
@@ -31,7 +29,12 @@ namespace ClassForge
         /// <summary>
         /// Gets or sets the folder where the file resides.
         /// </summary>
-        public string ScanFolder { get; set; } 
+        public string ScanFolder { get; set; }
+
+        /// <summary>
+        /// Gets or sets the list of macros in the document
+        /// </summary>
+        public List<Macro> Macros { get; set; }
 
         /// <summary>
         /// Parses the specified file.
@@ -67,22 +70,65 @@ namespace ClassForge
             this.StripReferenceClasses(ref stringText);
             this.ParseTextForClasses(ref stringText);
             this.StripComments(ref stringText);
-            
+
+            this.StripEmptyLines(ref stringText);
+
             // 4. merge classes
             // 5. deserialize the model
         }
 
-        private void ParseMacros(ref string stringText)
+        /// <summary>
+        /// Strips empty lines
+        /// </summary>
+        /// <param name="stringText">The text to parse</param>
+        private void StripEmptyLines(ref string stringText)
         {
-            // first do a multiline search
-
-            stringText = Regex.Replace(stringText, ParserRules.DefineMultiSearchPattern, string.Empty);
-
-            // then do a normal search
-
-            stringText = Regex.Replace(stringText, ParserRules.DefineSearchPattern, string.Empty);
+            stringText = Regex.Replace(stringText, ParserRules.EmptyLineSearchPattern, string.Empty, RegexOptions.Multiline);
         }
 
+        /// <summary>
+        /// Parses the macros
+        /// </summary>
+        /// <param name="stringText">The text to parse</param>
+        private void ParseMacros(ref string stringText)
+        {
+            this.Macros = new List<Macro>();
+            
+            // first do a multiline search
+            var matches = Regex.Matches(stringText, ParserRules.DefineMultiSearchPattern);
+
+            foreach (Match match in matches)
+            {
+                // add the macro
+                this.Macros.Add(new Macro(match));
+
+                // delete the original
+                stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Empty);
+            }
+
+            // then do a normal singleline search
+            matches = Regex.Matches(stringText, ParserRules.DefineSearchPattern);
+
+            foreach (Match match in matches)
+            {
+                // add the macro
+                this.Macros.Add(new Macro(match));
+
+                // delete the original
+                stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Empty);
+            }
+
+            // once all macros saved do a replace on the macros
+            foreach (var macro in this.Macros)
+            {
+                stringText = Regex.Replace(stringText, macro.SearchPattern, macro.ReplacePattern);
+            }
+        }
+
+        /// <summary>
+        /// Parses and inserts the include preprocessor commands
+        /// </summary>
+        /// <param name="stringText">The text to parse</param>
         private void ParseIncludes(ref string stringText)
         {
             var matches = Regex.Matches(stringText, ParserRules.IncludeSearchPattern);
@@ -106,30 +152,56 @@ namespace ClassForge
             if(Regex.Matches(stringText, ParserRules.IncludeSearchPattern).Count != 0) this.ParseIncludes(ref stringText);
         }
 
+        /// <summary>
+        /// Strips lose comments
+        /// </summary>
+        /// <param name="stringText">The text to parse</param>
         private void StripComments(ref string stringText)
         {
             stringText = Regex.Replace(stringText, ParserRules.BlockCommentSearchPattern, string.Empty);
             stringText = Regex.Replace(stringText, ParserRules.LineCommentSearchPattern, string.Empty);
         }
 
+        /// <summary>
+        /// Strips the reference classes
+        /// </summary>
+        /// <param name="stringText">The text to parse</param>
         private void StripReferenceClasses(ref string stringText)
         {
             stringText = Regex.Replace(stringText, ParserRules.ClassReferenceSearchPattern, string.Empty);
         }
 
+        /// <summary>
+        /// Parses and pepaces the classes
+        /// </summary>
+        /// <param name="stringText">The text to parse</param>
         private void ParseTextForClasses(ref string stringText)
         {
-            stringText = Regex.Replace(stringText, ParserRules.ClassSearchPattern, ParserRules.ClassReplacePattern);
+            var matches = Regex.Matches(stringText, ParserRules.ClassSearchPattern);
+
+            foreach (Match match in matches)
+            {
+                string name = match.Groups["Name"].Value;
+                string inheritance = match.Groups["Inheritance"].Value;
+                string remark = match.Groups["Remark"].Value;
+
+                if (!string.IsNullOrWhiteSpace(remark))
+                {
+                    remark = this.EscapeStringForXML(remark);
+                }
+
+                stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Class Name=\"{0}\" Inheritance=\"{1}\" Remark=\"{2}\">", name, inheritance, remark));
+            }
+            
             stringText = Regex.Replace(stringText, ParserRules.ClassCloseSearchPattern, ParserRules.ClassCloseReplacePattern);
         }
 
+        /// <summary>
+        /// Parses and replaces all Property types
+        /// </summary>
+        /// <param name="stringText">The text to parse</param>
         private void ParseTextForProperties(ref string stringText)
         {
-            // TODO: some manipulation of arrays necessary
-
-            
-
-            //stringText = Regex.Replace(stringText, ParserRules.PropertyArraySearchPattern, ParserRules.PropertyReplacePattern);
             var matches = Regex.Matches(stringText, ParserRules.PropertyArraySearchPattern);
 
             foreach (Match match in matches)
@@ -143,22 +215,51 @@ namespace ClassForge
                     value = this.PretifyArrayValue(value);
                 }
 
+                if (!string.IsNullOrWhiteSpace(remark))
+                {
+                    remark = this.EscapeStringForXML(remark);
+                }
+
                 stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\" />", name, value, remark));
             }
 
-            stringText = Regex.Replace(stringText, ParserRules.PropertySearchPattern, ParserRules.PropertyReplacePattern);
+            matches = Regex.Matches(stringText, ParserRules.PropertySearchPattern);
+
+            foreach (Match match in matches)
+            {
+                string name = match.Groups["Name"].Value;
+                string value = match.Groups["Value"].Value;
+                string remark = match.Groups["Remark"].Value;
+
+                if (!string.IsNullOrWhiteSpace(value))
+                {
+                    value = this.EscapeStringForXML(value);
+                }
+
+                if (!string.IsNullOrWhiteSpace(remark))
+                {
+                    remark = this.EscapeStringForXML(remark);
+                }
+
+                stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\" />", name, value, remark));
+            }
         }
 
+        /// <summary>
+        /// Cleans up an array string
+        /// </summary>
+        /// <param name="value">The value of all array values, delimited by comma</param>
+        /// <returns>A clean array string</returns>
         private string PretifyArrayValue(string value)
         {
 
-            var values = value.Split(new char[] {','}).ToList();
+            var values = value.Split(new[] {','}).ToList();
             var prettyList = new List<string>();
 
             foreach (var val in values)
             {
                 var prettyVal = val.Trim();
-                prettyVal = this.PretifyValue(prettyVal);
+                prettyVal = this.EscapeStringForXML(prettyVal);
                 
                 prettyList.Add(prettyVal);
             }
@@ -167,6 +268,7 @@ namespace ClassForge
             {
                 return prettyList[0];
             }
+
             if (prettyList.Count > 1)
             {
                 var prettyString = prettyList[0];
@@ -182,7 +284,12 @@ namespace ClassForge
             return null;
         }
 
-        private string PretifyValue(string prettyVal)
+        /// <summary>
+        /// Escapes special characters for XML
+        /// </summary>
+        /// <param name="prettyVal">The string to escape</param>
+        /// <returns>The escaped string</returns>
+        private string EscapeStringForXML(string prettyVal)
         {
             // you need to escape characters correctly for xml
             //"   &quot;
