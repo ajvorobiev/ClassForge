@@ -20,19 +20,16 @@ namespace ClassForge.Model
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
-        [XmlAttribute]
         public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the parent class.
         /// </summary>
-        [XmlAttribute]
         public string Inherits { get; set; }
 
         /// <summary>
         /// Gets or sets the remark
         /// </summary>
-        [XmlAttribute]
         public string Remark { get; set; }
 
         /// <summary>
@@ -46,6 +43,7 @@ namespace ClassForge.Model
         public Class()
         {
             this.Classes = new List<Class>();
+            this.Properties = new List<Property>();
         }
     }
 }

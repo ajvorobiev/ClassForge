@@ -14,10 +14,10 @@ class CfgPatches
 	*/
 	class rhs_c_2s3
 	{
-		units[] = { rhs_2s3_tv }; /**< The unit classes injected by this addon. */
+		units[] = { rhs_2s3_tv }; //*< The unit classes injected by this addon. 
 		weapons[] = {};
-		requiredVersion = 1.38; /**< The minimum version of the game required. */
-		requiredAddons[] = { "rhs_main", "rhs_c_heavyweapons", "rhs_decals", "rhs_optics", "rhs_c_troops" }; /**< The addons required. */
+		requiredVersion = 1.38; //< The minimum version of the game required. 
+		requiredAddons[] = { "rhs_main", "rhs_c_heavyweapons", "rhs_decals", "rhs_optics", "rhs_c_troops" }; //< The addons required. 
 		version = VERSION;
 	};
 };
@@ -25,8 +25,6 @@ class CfgPatches
 era_am(12)
 
 era_am(32)
-
-era_am("def")
 
 class DefaultEventhandlers;
 class WeaponFireGun;

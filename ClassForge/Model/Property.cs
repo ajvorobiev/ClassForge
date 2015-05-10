@@ -13,7 +13,6 @@
         /// <value>
         /// The remark.
         /// </value>
-        [XmlAttribute]
         public string Remark { get; set; }
 
         /// <summary>
@@ -22,7 +21,6 @@
         /// <value>
         /// The name.
         /// </value>
-        [XmlAttribute]
         public string Name { get; set; }
 
         /// <summary>
@@ -31,7 +29,6 @@
         /// <value>
         /// The value.
         /// </value>
-        [XmlAttribute]
         public string Value { get; set; }
     }
 }

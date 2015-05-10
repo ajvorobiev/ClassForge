@@ -8,27 +8,27 @@
         /// <summary>
         /// The property array search pattern
         /// </summary>
-        public static string PropertyArraySearchPattern = @"(?'Name'[\w+]+\[\])[ \t]?=\s*\{\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}]+)?\s*\}\;([ \t]?/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertyArraySearchPattern = @"(?'Name'[\w_]+\[\])[ \t]*=\s*([//\w\s]+)?\{\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\']+)?\s*\}\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         /// <summary>
         /// The property search pattern
         /// </summary>
-        public static string PropertySearchPattern = @"(?'Name'[\w+]+)[ \t]?=\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}]+)?\s*\;([ \t]?/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertySearchPattern = @"(?'Name'[\w_]+)[ \t]*=\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\']+)?\s*\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         /// <summary>
         /// The property replace pattern
         /// </summary>
-        public static string PropertyReplacePattern = @"<Parameter Name=""${Name}"" Value=""${Value}"" Remark=""${Remark}"" />";
+        public static string PropertyReplacePattern = @"<Parameter Name=""${Name}"" Value=""${Value}"" Remark=""${Remark}""></Parameter>";
 
         /// <summary>
         /// The class search pattern
         /// </summary>
-        public static string ClassSearchPattern = @"(\/\/\/<summary>\s*\/\/\/[ \t]*(?'Remark'.*)\s*\/\/\/</summary>\s*)?class[ \t]+(?'Name'[\S]+)[ \t]*:?[ \t]*(?'Inheritance'[\S]+)?\s*[\{]+";
+        public static string ClassSearchPattern = @"(\/\/\/<summary>\s*\/\/\/[ \t]*(?'Remark'.*)\s*\/\/\/</summary>\s*)?class[ \t]+(?'Name'[\w_]+)[ \t]*:?[ \t]*(?'Inheritance'[\S]+)?\s*[\{]+";
 
         /// <summary>
         /// The class replace pattern
         /// </summary>
-        public static string ClassReplacePattern = @"<Class Name=""${Name}"" Inheritance=""${Inheritance}"" Remark=""${Remark}"">";
+        public static string ClassReplacePattern = @"<Class Name=""${Name}"" Inheritance=""${Inheritance}"" Remark=""${Remark}""/>";
 
         /// <summary>
         /// The class closing search pattern
@@ -58,12 +58,12 @@
         /// <summary>
         /// The define multi search pattern
         /// </summary>
-        public static string DefineMultiSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \t\w\$\#\{|=\;\-\.\""\\:}]*\\[\s]+)+[\S\;]*)";
+        public static string DefineMultiSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \S\t\d\w\$\#\{_\,\+\*\/\\\=\;\-\.\""\\:\}]*\\[\s]+)+[\S\;]+)";
 
         /// <summary>
         /// The define search pattern
         /// </summary>
-        public static string DefineSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \t\w\$\#\{|=\;\-\.\""\\:}]*))";
+        public static string DefineSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \t\w\$\#\{_\,\+\*\/\\|=\;\-\.\""\\:}]*))";
 
         /// <summary>
         /// The include search pattern

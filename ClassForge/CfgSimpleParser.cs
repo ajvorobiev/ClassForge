@@ -24,7 +24,7 @@ namespace ClassForge
         /// <summary>
         /// Gets or sets the model.
         /// </summary>
-        public Model.Model Model { get; set; }
+        public string XmlOutput { get; set; }
 
         /// <summary>
         /// Gets or sets the folder where the file resides.
@@ -37,19 +37,40 @@ namespace ClassForge
         public List<Macro> Macros { get; set; }
 
         /// <summary>
+        /// Parses a directory, looking for every config.cpp file
+        /// </summary>
+        /// <param name="directoryPath">The path of the folder</param>
+        /// <returns>The collection of models.</returns>
+        public List<Model.Model> ParseDirectory(string directoryPath)
+        {
+            if (!Directory.Exists(directoryPath))
+                throw new ArgumentException("The directory Specified does not exist.", "directoryPath");
+
+            var files = Directory.GetFiles(directoryPath, "config.cpp", SearchOption.AllDirectories);
+
+            var result = new List<Model.Model>();
+
+            foreach (var file in files)
+            {
+                var model = this.Parse(file);
+                result.Add(model);
+            }
+
+            return result;
+        }
+
+        /// <summary>
         /// Parses the specified file.
         /// </summary>
-        /// <param name="path">
-        /// The path of the file.
+        /// <param name="filepath">
+        /// The filepath of the file.
         /// </param>
-        public void Parse(string path)
+        public Model.Model Parse(string filepath)
         {
-            this.Model = new Model.Model();
+            if(string.IsNullOrWhiteSpace(filepath))
+                throw new ArgumentNullException("filepath");
 
-            if(string.IsNullOrWhiteSpace(path))
-                throw new ArgumentNullException("path");
-
-            var fileInfo = new FileInfo(path).Directory;
+            var fileInfo = new FileInfo(filepath).Directory;
 
             if (fileInfo == null)
             {
@@ -60,7 +81,7 @@ namespace ClassForge
             this.ScanFolder = fileInfo.FullName;
 
             // read in initial file
-            var stringText = File.ReadAllText(path);
+            var stringText = File.ReadAllText(filepath);
 
             this.ParseIncludes(ref stringText);
 
@@ -73,8 +94,11 @@ namespace ClassForge
 
             this.StripEmptyLines(ref stringText);
 
-            // 4. merge classes
-            // 5. deserialize the model
+            this.XmlOutput = stringText;
+
+            var xmlParser = new XmlParser();
+
+            return xmlParser.Parse(stringText);
         }
 
         /// <summary>
@@ -190,7 +214,7 @@ namespace ClassForge
                     remark = this.EscapeStringForXML(remark);
                 }
 
-                stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Class Name=\"{0}\" Inheritance=\"{1}\" Remark=\"{2}\">", name, inheritance, remark));
+                stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Class Name=\"{0}\" Inheritance=\"{1}\" Remark=\"{2}\"/>\r\n", name, inheritance, remark));
             }
             
             stringText = Regex.Replace(stringText, ParserRules.ClassCloseSearchPattern, ParserRules.ClassCloseReplacePattern);
@@ -220,7 +244,11 @@ namespace ClassForge
                     remark = this.EscapeStringForXML(remark);
                 }
 
-                stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\" />", name, value, remark));
+                var rgx = new Regex(Regex.Escape(match.Value));
+                stringText = rgx.Replace(stringText,
+                    string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\"/>\r\n", name, value, remark), 1);
+
+                //stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\"/>\r\n", name, value, remark));
             }
 
             matches = Regex.Matches(stringText, ParserRules.PropertySearchPattern);
@@ -241,7 +269,11 @@ namespace ClassForge
                     remark = this.EscapeStringForXML(remark);
                 }
 
-                stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\" />", name, value, remark));
+                var rgx = new Regex(Regex.Escape(match.Value));
+                stringText = rgx.Replace(stringText,
+                    string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\"/>\r\n", name, value, remark), 1);
+
+                //stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\"/>\r\n", name, value, remark));
             }
         }
 
@@ -253,7 +285,10 @@ namespace ClassForge
         private string PretifyArrayValue(string value)
         {
 
-            var values = value.Split(new[] {','}).ToList();
+            var stripped = Regex.Replace(value, ParserRules.LineCommentSearchPattern, string.Empty);
+            stripped = stripped.Replace("\r\n", string.Empty);
+
+            var values = stripped.Split(new[] {','}).ToList();
             var prettyList = new List<string>();
 
             foreach (var val in values)
@@ -298,12 +333,14 @@ namespace ClassForge
             //>   &gt;
             //&   &amp;
 
-            prettyVal = prettyVal.Replace("&", "&amp");
+            prettyVal = prettyVal.Replace("&", "&amp;");
 
-            prettyVal = prettyVal.Replace("\"", "&quot");
-            prettyVal = prettyVal.Replace("'", "&apos");
-            prettyVal = prettyVal.Replace("<", "&lt");
-            prettyVal = prettyVal.Replace(">", "&gt");
+            prettyVal = prettyVal.Replace("\"", "&quot;");
+            prettyVal = prettyVal.Replace("'", "&apos;");
+            prettyVal = prettyVal.Replace("<", "&lt;");
+            prettyVal = prettyVal.Replace(">", "&gt;");
+            prettyVal = prettyVal.Replace("\\", "&#92;");
+            prettyVal = prettyVal.Replace(" ", "&#160;");
 
             return prettyVal;
         }

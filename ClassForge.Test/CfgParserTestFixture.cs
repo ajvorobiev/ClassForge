@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,16 @@ namespace ClassForge.Test
         {
             var parser = new CfgSimpleParser();
             parser.Parse("files\\config.cpp");
+        }
+
+        [Test]
+        public void DirectoryTest()
+        {
+            var parser = new CfgSimpleParser();
+            var watch = Stopwatch.StartNew();
+            var models = parser.ParseDirectory("P:\\rhsusf");
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
         }
     }
 }
