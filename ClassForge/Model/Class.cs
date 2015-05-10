@@ -7,11 +7,10 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System.Xml.Serialization;
-
 namespace ClassForge.Model
 {
     using System.Collections.Generic;
+    using System.Xml.Serialization;
 
     /// <summary>
     /// The class.
@@ -39,7 +38,7 @@ namespace ClassForge.Model
         /// <summary>
         /// Gets or sets the list of <see cref="Property"/>'s
         /// </summary>
-        public List<Property> Properties { get; set; } 
+        public List<Property> Properties { get; set; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Class"/> class.
