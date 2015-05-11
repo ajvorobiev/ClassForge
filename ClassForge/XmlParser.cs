@@ -1,4 +1,13 @@
-﻿namespace ClassForge
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="XmlParser.cs" company="Red Hammer Studios">
+//   Copyright (c) 2015 Red Hammer Studios
+// </copyright>
+// <summary>
+//   The class that can parse the incoming xml
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ClassForge
 {
     using System.IO;
     using System.Xml.Linq;

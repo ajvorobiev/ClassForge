@@ -1,4 +1,13 @@
-﻿namespace ClassForge.Model
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Model.cs" company="Red Hammer Studios">
+//   Copyright (c) 2015 Red Hammer Studios
+// </copyright>
+// <summary>
+//   A model represents a whole file
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ClassForge.Model
 {
     using System.Collections.Generic;
 

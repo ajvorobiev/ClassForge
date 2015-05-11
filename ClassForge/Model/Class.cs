@@ -10,7 +10,6 @@
 namespace ClassForge.Model
 {
     using System.Collections.Generic;
-    using System.Xml.Serialization;
 
     /// <summary>
     /// The class.

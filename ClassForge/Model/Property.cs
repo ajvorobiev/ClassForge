@@ -1,7 +1,14 @@
-﻿namespace ClassForge.Model
-{
-    using System.Xml.Serialization;
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Property.cs" company="Red Hammer Studios">
+//   Copyright (c) 2015 Red Hammer Studios
+// </copyright>
+// <summary>
+//   The property
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
 
+namespace ClassForge.Model
+{
     /// <summary>
     /// The property
     /// </summary>

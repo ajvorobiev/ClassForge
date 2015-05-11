@@ -11,8 +11,8 @@ namespace ClassForge
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.IO;
+    using System.Linq;
     using System.Text.RegularExpressions;
     using Model;
 
@@ -65,9 +65,12 @@ namespace ClassForge
         /// <param name="filepath">
         /// The filepath of the file.
         /// </param>
+        /// <returns>
+        /// The <see cref="Model"/>.
+        /// </returns>
         public Model.Model Parse(string filepath)
         {
-            if(string.IsNullOrWhiteSpace(filepath))
+            if (string.IsNullOrWhiteSpace(filepath))
                 throw new ArgumentNullException("filepath");
 
             var fileInfo = new FileInfo(filepath).Directory;
@@ -173,7 +176,8 @@ namespace ClassForge
             }
 
             // recurse if after all replacement still some are left
-            if(Regex.Matches(stringText, ParserRules.IncludeSearchPattern).Count != 0) this.ParseIncludes(ref stringText);
+            if (Regex.Matches(stringText, ParserRules.IncludeSearchPattern).Count != 0)
+                this.ParseIncludes(ref stringText);
         }
 
         /// <summary>
@@ -234,7 +238,7 @@ namespace ClassForge
                 string value = match.Groups["Value"].Value;
                 string remark = match.Groups["Remark"].Value;
 
-                if(!string.IsNullOrWhiteSpace(value)) 
+                if (!string.IsNullOrWhiteSpace(value))
                 {
                     value = this.PretifyArrayValue(value);
                 }
@@ -247,8 +251,6 @@ namespace ClassForge
                 var rgx = new Regex(Regex.Escape(match.Value));
                 stringText = rgx.Replace(stringText,
                     string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\"/>\r\n", name, value, remark), 1);
-
-                //stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\"/>\r\n", name, value, remark));
             }
 
             matches = Regex.Matches(stringText, ParserRules.PropertySearchPattern);
@@ -272,8 +274,6 @@ namespace ClassForge
                 var rgx = new Regex(Regex.Escape(match.Value));
                 stringText = rgx.Replace(stringText,
                     string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\"/>\r\n", name, value, remark), 1);
-
-                //stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Parameter Name=\"{0}\" Value=\"{1}\" Remark=\"{2}\"/>\r\n", name, value, remark));
             }
         }
 
@@ -284,11 +284,10 @@ namespace ClassForge
         /// <returns>A clean array string</returns>
         private string PretifyArrayValue(string value)
         {
-
             var stripped = Regex.Replace(value, ParserRules.LineCommentSearchPattern, string.Empty);
             stripped = stripped.Replace("\r\n", string.Empty);
 
-            var values = stripped.Split(new[] {','}).ToList();
+            var values = stripped.Split(new[] { ',' }).ToList();
             var prettyList = new List<string>();
 
             foreach (var val in values)
@@ -327,12 +326,11 @@ namespace ClassForge
         private string EscapeStringForXML(string prettyVal)
         {
             // you need to escape characters correctly for xml
-            //"   &quot;
-            //'   &apos;
-            //<   &lt;
-            //>   &gt;
-            //&   &amp;
-
+            // "   &quot;
+            // '   &apos;
+            // <   &lt;
+            // >   &gt;
+            // &   &amp;
             prettyVal = prettyVal.Replace("&", "&amp;");
 
             prettyVal = prettyVal.Replace("\"", "&quot;");

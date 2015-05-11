@@ -1,4 +1,13 @@
-﻿namespace ClassForge.Model
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="Macro.cs" company="Red Hammer Studios">
+//   Copyright (c) 2015 Red Hammer Studios
+// </copyright>
+// <summary>
+//   A define macro
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ClassForge.Model
 {
     using System.Collections.Generic;
     using System.Text.RegularExpressions;

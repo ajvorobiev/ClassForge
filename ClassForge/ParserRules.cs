@@ -1,4 +1,13 @@
-﻿namespace ClassForge
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="ParserRules.cs" company="Red Hammer Studios">
+//   Copyright (c) 2015 Red Hammer Studios
+// </copyright>
+// <summary>
+//   The regex rules for the parser
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ClassForge
 {
     /// <summary>
     /// The regex rules for the parser
@@ -8,12 +17,12 @@
         /// <summary>
         /// The property array search pattern
         /// </summary>
-        public static string PropertyArraySearchPattern = @"(?'Name'[\w_]+\[\])[ \t]*=\s*([//\w\s]+)?\{\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\']+)?\s*\}\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertyArraySearchPattern = @"(?'Name'[\w_]+\[\])[ \t]*=\s*([//\w\s]+)?\{\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?]+)?\s*\}\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         /// <summary>
         /// The property search pattern
         /// </summary>
-        public static string PropertySearchPattern = @"(?'Name'[\w_]+)[ \t]*=\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\']+)?\s*\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertySearchPattern = @"(?'Name'[\w_]+)[ \t]*=\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?]+)?\s*\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         /// <summary>
         /// The property replace pattern
@@ -38,7 +47,7 @@
         /// <summary>
         /// The class reference search pattern
         /// </summary>
-        public static string ClassReferenceSearchPattern = @"class[ \t]+[\w]+;[\s]*";
+        public static string ClassReferenceSearchPattern = @"[//]*class[ \t]+[\w]+;[\s]*";
 
         /// <summary>
         /// The class close replace pattern

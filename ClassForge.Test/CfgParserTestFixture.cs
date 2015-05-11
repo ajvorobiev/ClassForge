@@ -36,7 +36,7 @@ namespace ClassForge.Test
         {
             var parser = new CfgSimpleParser();
             var watch = Stopwatch.StartNew();
-            var models = parser.ParseDirectory("P:\\rhsusf");
+            var models = parser.ParseDirectory("files\\mergetest");
             watch.Stop();
             Console.WriteLine(watch.ElapsedMilliseconds);
         }

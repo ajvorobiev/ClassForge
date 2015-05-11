@@ -1,4 +1,13 @@
-﻿namespace ClassForge.Model
+﻿// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="IClassCollection.cs" company="Red Hammer Studios">
+//   Copyright (c) 2015 Red Hammer Studios
+// </copyright>
+// <summary>
+//   The interface of a class collection
+// </summary>
+// --------------------------------------------------------------------------------------------------------------------
+
+namespace ClassForge.Model
 {
     using System.Collections.Generic;
 
