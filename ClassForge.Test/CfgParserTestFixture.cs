@@ -48,7 +48,35 @@ namespace ClassForge.Test
             var watch = Stopwatch.StartNew();
             var model = parser.ParseDirectoryMerged("files\\mergetest");
             watch.Stop();
+            DrawModel(model);
             Console.WriteLine(watch.ElapsedMilliseconds);
+        }
+
+        private void DrawModel(Model.Model model)
+        {
+            var level = 1;
+            foreach (var w in model.Classes)
+            {
+                DrawClass(w, level);
+            }
+        }
+
+        private void DrawClass(Class c, int level)
+        {
+            string sepString = string.Empty;
+
+            for (int i = 0; i < level; i++)
+            {
+                sepString += ". ";
+            }
+
+            sepString += string.Format("|- {0}", c.Name);
+            Console.WriteLine(sepString);
+
+            foreach (var w in c.Classes)
+            {
+                DrawClass(w, level+1);
+            }
         }
     }
 }

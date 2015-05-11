@@ -38,7 +38,7 @@ namespace ClassForge.Model
             {
                 foreach (Class c in model.Classes)
                 {
-                    this.MergeClasses(this.Classes, c);
+                    this.MergeClass(this.Classes, c);
                 }
             }
         }
@@ -49,10 +49,10 @@ namespace ClassForge.Model
         /// <param name="classList">
         /// The class list.
         /// </param>
-        /// <param name="c">
+        /// <param name="mergeClass">
         /// The class.
         /// </param>
-        private void MergeClasses(List<Class> classList, Class mergeClass)
+        private void MergeClass(List<Class> classList, Class mergeClass)
         {
             var exClass = classList.FirstOrDefault(c => c.Name == mergeClass.Name);
 
@@ -63,6 +63,15 @@ namespace ClassForge.Model
             else
             {
                 exClass.Classes.AddRange(mergeClass.Classes);
+
+                //foreach (var cd in mergeClass.Classes)
+                //{
+                //    if (exClass.Classes.FirstOrDefault(r => r.Name == cd.Name) == null)
+                //    {
+                //        exClass.Classes.Add(cd);
+                //    }
+                //}
+
                 exClass.Properties.AddRange(mergeClass.Properties);
             }
         }
