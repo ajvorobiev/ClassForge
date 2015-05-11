@@ -40,8 +40,9 @@ namespace ClassForge
         /// Parses a directory, looking for every config.cpp file
         /// </summary>
         /// <param name="directoryPath">The path of the folder</param>
+        /// <param name="merge">Indicates whether the <see cref="Model"/>s will be merged into one.</param>
         /// <returns>The collection of models.</returns>
-        public List<Model.Model> ParseDirectory(string directoryPath)
+        public List<Model.Model> ParseDirectory(string directoryPath, bool merge = false)
         {
             if (!Directory.Exists(directoryPath))
                 throw new ArgumentException("The directory Specified does not exist.", "directoryPath");
@@ -56,7 +57,25 @@ namespace ClassForge
                 result.Add(model);
             }
 
+            if (merge)
+            {
+                var mergedModel = new Model.Model();
+                mergedModel.MergeFromListOfModels(result);
+
+                return new List<Model.Model> { mergedModel };
+            }
+
             return result;
+        }
+
+        /// <summary>
+        /// Parses the directory and outputs a merged model.
+        /// </summary>
+        /// <param name="directoryPath">The directory path.</param>
+        /// <returns>A single <see cref="Model"/> containing all the classes merged from the directory.</returns>
+        public Model.Model ParseDirectoryMerged(string directoryPath)
+        {
+            return this.ParseDirectory(directoryPath, true)[0];
         }
 
         /// <summary>

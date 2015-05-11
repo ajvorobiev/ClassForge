@@ -40,5 +40,15 @@ namespace ClassForge.Test
             watch.Stop();
             Console.WriteLine(watch.ElapsedMilliseconds);
         }
+
+        [Test]
+        public void DirectoryMergeTest()
+        {
+            var parser = new CfgSimpleParser();
+            var watch = Stopwatch.StartNew();
+            var model = parser.ParseDirectoryMerged("files\\mergetest");
+            watch.Stop();
+            Console.WriteLine(watch.ElapsedMilliseconds);
+        }
     }
 }

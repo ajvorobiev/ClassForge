@@ -23,5 +23,16 @@ namespace ClassForge.Model
         {
             this.Classes = new List<Class>();
         }
+
+        public void MergeFromListOfModels(List<Model> models)
+        {
+            foreach (Model model in models)
+            {
+                foreach (Class c in model.Classes)
+                {
+                    this.Classes.Add(c);
+                }
+            }
+        }
     }
 }
