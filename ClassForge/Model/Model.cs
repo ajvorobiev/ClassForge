@@ -7,6 +7,8 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System.Linq;
+
 namespace ClassForge.Model
 {
     using System.Collections.Generic;
@@ -24,14 +26,44 @@ namespace ClassForge.Model
             this.Classes = new List<Class>();
         }
 
+        /// <summary>
+        /// Merges multiple models into this model.
+        /// </summary>
+        /// <param name="models">
+        /// The models.
+        /// </param>
         public void MergeFromListOfModels(List<Model> models)
         {
             foreach (Model model in models)
             {
                 foreach (Class c in model.Classes)
                 {
-                    this.Classes.Add(c);
+                    this.MergeClasses(this.Classes, c);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Merge a class into a list
+        /// </summary>
+        /// <param name="classList">
+        /// The class list.
+        /// </param>
+        /// <param name="c">
+        /// The class.
+        /// </param>
+        private void MergeClasses(List<Class> classList, Class mergeClass)
+        {
+            var exClass = classList.FirstOrDefault(c => c.Name == mergeClass.Name);
+
+            if (exClass == null)
+            {
+                classList.Add(mergeClass);
+            }
+            else
+            {
+                exClass.Classes.AddRange(mergeClass.Classes);
+                exClass.Properties.AddRange(mergeClass.Properties);
             }
         }
     }
