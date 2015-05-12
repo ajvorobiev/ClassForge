@@ -70,12 +70,19 @@ namespace ClassForge.Test
                 sepString += ". ";
             }
 
-            sepString += string.Format("|- {0}", c.Name);
+            sepString += string.Format("+- {0}", c.Name);
+
+            if(c.InheritanceClass != null)
+                sepString += string.Format(" : {0}", c.InheritanceClass.Name);
+
+            //if(c.ContainmentParent != null)
+               // sepString += string.Format(" in {0}", c.ContainmentParent.Name);
+
             Console.WriteLine(sepString);
 
             foreach (var w in c.Classes)
             {
-                DrawClass(w, level+1);
+                this.DrawClass(w, level + 1);
             }
         }
     }

@@ -27,6 +27,21 @@ namespace ClassForge.Model
         public string Inherits { get; set; }
 
         /// <summary>
+        /// Gets or sets the containment parent.
+        /// </summary>
+        public Class ContainmentParent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the inheritance class.
+        /// </summary>
+        public Class InheritanceClass { get; set; }
+
+        /// <summary>
+        /// Gets or sets the inheritance children.
+        /// </summary>
+        public List<Class> InheritanceChildren { get; set; } 
+
+        /// <summary>
         /// Gets or sets the remark
         /// </summary>
         public string Remark { get; set; }
@@ -43,6 +58,7 @@ namespace ClassForge.Model
         {
             this.Classes = new List<Class>();
             this.Properties = new List<Property>();
+            this.InheritanceChildren = new List<Class>();
         }
     }
 }

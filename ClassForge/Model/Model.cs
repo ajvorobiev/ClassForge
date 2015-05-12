@@ -19,11 +19,17 @@ namespace ClassForge.Model
     public class Model : ClassCollection
     {
         /// <summary>
+        /// The class map.
+        /// </summary>
+        private Dictionary<string, Class> ClassMap;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="Model"/> class.
         /// </summary>
         public Model()
         {
             this.Classes = new List<Class>();
+            this.ClassMap = new Dictionary<string, Class>();
         }
 
         /// <summary>
@@ -59,20 +65,65 @@ namespace ClassForge.Model
             if (exClass == null)
             {
                 classList.Add(mergeClass);
+                this.ClassMap.Add(mergeClass.Name, mergeClass);
+
+                foreach (var r in mergeClass.Classes)
+                {
+                    this.ClassMap.Add(r.Name, r);
+                }
             }
             else
             {
-                exClass.Classes.AddRange(mergeClass.Classes);
-
-                //foreach (var cd in mergeClass.Classes)
-                //{
-                //    if (exClass.Classes.FirstOrDefault(r => r.Name == cd.Name) == null)
-                //    {
-                //        exClass.Classes.Add(cd);
-                //    }
-                //}
+                foreach (var cd in mergeClass.Classes)
+                {
+                    // only add the class if it doesnt exist yet
+                    if (exClass.Classes.FirstOrDefault(r => r.Name == cd.Name) == null)
+                    {
+                        exClass.Classes.Add(cd);
+                        this.ClassMap.Add(cd.Name, cd);
+                    }
+                }
 
                 exClass.Properties.AddRange(mergeClass.Properties);
+            }
+
+            this.UpdateReferences();
+        }
+
+        /// <summary>
+        /// Updates the model references
+        /// </summary>
+        private void UpdateReferences()
+        {
+            foreach (var cl in this.Classes)
+            {
+                this.UpdateClassReference(cl, null);
+            }
+        }
+
+        /// <summary>
+        /// Updates the class references.
+        /// </summary>
+        /// <param name="cl">
+        /// The child class.
+        /// </param>
+        /// <param name="parent">
+        /// The parent class.
+        /// </param>
+        private void UpdateClassReference(Class cl, Class parent)
+        {
+            cl.ContainmentParent = parent;
+            Class inheritanceClass;
+
+            if (this.ClassMap.TryGetValue(cl.Inherits, out inheritanceClass))
+            {
+                cl.InheritanceClass = inheritanceClass;
+                inheritanceClass.InheritanceChildren.Add(cl);
+            }
+
+            foreach (var cd in cl.Classes)
+            {
+                this.UpdateClassReference(cd, cl);
             }
         }
     }
