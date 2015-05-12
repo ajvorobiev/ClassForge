@@ -7,6 +7,7 @@
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
+using System;
 using System.Linq;
 
 namespace ClassForge.Model
@@ -65,11 +66,25 @@ namespace ClassForge.Model
             if (exClass == null)
             {
                 classList.Add(mergeClass);
-                this.ClassMap.Add(mergeClass.Name, mergeClass);
+                try
+                {
+                    this.ClassMap.Add(mergeClass.Name, mergeClass);
+                }
+                catch (Exception)
+                {
+                    //Console.WriteLine("The class named {0} already exists in classmap", mergeClass.Name);
+                }
 
                 foreach (var r in mergeClass.Classes)
                 {
-                    this.ClassMap.Add(r.Name, r);
+                    try
+                    {
+                        this.ClassMap.Add(r.Name, r);
+                    }
+                    catch (Exception)
+                    {
+                        //Console.WriteLine("The class named {0} already exists in classmap", r.Name);
+                    }
                 }
             }
             else
@@ -80,7 +95,15 @@ namespace ClassForge.Model
                     if (exClass.Classes.FirstOrDefault(r => r.Name == cd.Name) == null)
                     {
                         exClass.Classes.Add(cd);
-                        this.ClassMap.Add(cd.Name, cd);
+                        try
+                        {
+                            this.ClassMap.Add(cd.Name, cd);
+                        }
+                        catch (System.Exception)
+                        {
+                            
+                            //Console.WriteLine("The class named {0} already exists in classmap", cd.Name);
+                        }
                     }
                 }
 

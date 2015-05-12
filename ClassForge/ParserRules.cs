@@ -22,7 +22,7 @@ namespace ClassForge
         /// <summary>
         /// The property search pattern
         /// </summary>
-        public static string PropertySearchPattern = @"(?'Name'[\w_]+)[ \t]*=\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?]+)?\s*\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertySearchPattern = @"(?'Name'[\w_]+)[ \t]*=\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?]+)?\s*\;([ \t]*\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         /// <summary>
         /// The property replace pattern
@@ -32,7 +32,7 @@ namespace ClassForge
         /// <summary>
         /// The class search pattern
         /// </summary>
-        public static string ClassSearchPattern = @"(\/\/\/<summary>\s*\/\/\/[ \t]*(?'Remark'.*)\s*\/\/\/</summary>\s*)?class[ \t]+(?'Name'[\w_]+)[ \t]*:?[ \t]*(?'Inheritance'[\S]+)?\s*[\{]+";
+        public static string ClassSearchPattern = @"(\/\/\/<summary>\s*\/\/\/[ \t]*(?'Remark'.*)\s*\/\/\/</summary>\s*)?class[ \t]+(?'Name'[\w_]+)[ \t]*:?[ \t]*(?'Inheritance'[\w_]+)?(\s*\/\/.*)?\s*[\{]+";
 
         /// <summary>
         /// The class replace pattern
@@ -67,12 +67,12 @@ namespace ClassForge
         /// <summary>
         /// The define multi search pattern
         /// </summary>
-        public static string DefineMultiSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \S\t\d\w\$\#\{_\,\+\*\/\\\=\;\-\.\""\\:\}]*\\[\s]+)+[\S\;]+)";
+        public static string DefineMultiSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \S\t\d\w\$\#\{_\,\+\*\/\\\=\;\-\.\""\\:\}\)\(]*\\[\s]+)+[\w _\=\#\;\""\}]+)";
 
         /// <summary>
         /// The define search pattern
         /// </summary>
-        public static string DefineSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \t\w\$\#\{_\,\+\*\/\\|=\;\-\.\""\\:}]*))";
+        public static string DefineSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \t\w\$\#\{_\,\+\*\/\\|=\;\-\.\""\\:\(\)}]*))";
 
         /// <summary>
         /// The include search pattern

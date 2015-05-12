@@ -46,7 +46,7 @@ namespace ClassForge.Test
         {
             var parser = new CfgSimpleParser();
             var watch = Stopwatch.StartNew();
-            var model = parser.ParseDirectoryMerged("files\\mergetest");
+            var model = parser.ParseDirectoryMerged("P:\\rhsafrf\\addons\\rhs_c_heavyweapons");
             watch.Stop();
             DrawModel(model);
             Console.WriteLine(watch.ElapsedMilliseconds);
@@ -54,14 +54,19 @@ namespace ClassForge.Test
 
         private void DrawModel(Model.Model model)
         {
-            var level = 1;
+            var level = 0;
+
+            var sb = new StringBuilder();
+
             foreach (var w in model.Classes)
             {
-                DrawClass(w, level);
+                DrawClass(w, level, ref sb);
             }
+
+            Console.WriteLine(sb.ToString());
         }
 
-        private void DrawClass(Class c, int level)
+        private void DrawClass(Class c, int level, ref StringBuilder sb)
         {
             string sepString = string.Empty;
 
@@ -78,11 +83,11 @@ namespace ClassForge.Test
             //if(c.ContainmentParent != null)
                // sepString += string.Format(" in {0}", c.ContainmentParent.Name);
 
-            Console.WriteLine(sepString);
+            sb.AppendLine(sepString);
 
             foreach (var w in c.Classes)
             {
-                this.DrawClass(w, level + 1);
+                this.DrawClass(w, level + 1, ref sb);
             }
         }
     }

@@ -90,8 +90,7 @@ namespace ClassForge
                     {
                         return;
                     }
-
-                    if (readString.Contains("<Parameter"))
+                    else if (readString.Contains("<Parameter"))
                     {
                         var newProperty = new Property();
                         var element = XElement.Parse(readString);

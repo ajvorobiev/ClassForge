@@ -112,7 +112,7 @@ namespace ClassForge
             this.ParseTextForProperties(ref stringText);
             this.StripReferenceClasses(ref stringText);
             this.ParseTextForClasses(ref stringText);
-            this.StripComments(ref stringText);
+            
 
             this.StripEmptyLines(ref stringText);
 
@@ -239,6 +239,8 @@ namespace ClassForge
 
                 stringText = Regex.Replace(stringText, Regex.Escape(match.Value), string.Format("<Class Name=\"{0}\" Inheritance=\"{1}\" Remark=\"{2}\"/>\r\n", name, inheritance, remark));
             }
+
+            this.StripComments(ref stringText);
             
             stringText = Regex.Replace(stringText, ParserRules.ClassCloseSearchPattern, ParserRules.ClassCloseReplacePattern);
         }

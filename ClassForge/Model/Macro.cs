@@ -141,8 +141,12 @@ namespace ClassForge.Model
                 // replace partials
                 result = result.Replace("##" + this.Arguments[i] + "##", "${arg" + i + "}");
 
+                result = result.Replace("##" + this.Arguments[i], "${arg" + i + "}");
+
+                result = result.Replace(this.Arguments[i] + "##", "${arg" + i + "}");
+
                 // replace singles
-                result = result.Replace(" " + this.Arguments[i] + " ", " ${arg" + i + "} ");
+                result = result.Replace(this.Arguments[i], "${arg" + i + "}");
             }
 
             // replace ending backslash
