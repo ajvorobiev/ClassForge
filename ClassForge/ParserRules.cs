@@ -17,7 +17,7 @@ namespace ClassForge
         /// <summary>
         /// The property array search pattern
         /// </summary>
-        public static string PropertyArraySearchPattern = @"(?'Name'[\w_]+\[\])[ \t]*=\s*([//\w\s]+)?\{\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?]+)?\s*\}\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertyArraySearchPattern = @"(?'Name'[\w_]+\[\])[ \t]*\+?=\s*([//\w\s]+)?\{\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?]+)?\s*\}\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         /// <summary>
         /// The property search pattern
