@@ -126,7 +126,7 @@ namespace ClassForge.Model
                 result += @"\)";
             }
 
-            this.SearchPattern = result;
+            this.SearchPattern = @"[\s]" + result + @"[\s]";
         }
 
         /// <summary>

@@ -46,7 +46,7 @@ namespace ClassForge.Test
         {
             var parser = new CfgSimpleParser();
             var watch = Stopwatch.StartNew();
-            var model = parser.ParseDirectoryMerged("P:\\rhsafrf\\addons\\rhs_c_heavyweapons");
+            var model = parser.ParseDirectoryMerged("P:\\rhsusf\\addons");
             watch.Stop();
             DrawModel(model);
             Console.WriteLine(watch.ElapsedMilliseconds);

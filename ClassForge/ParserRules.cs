@@ -17,12 +17,12 @@ namespace ClassForge
         /// <summary>
         /// The property array search pattern
         /// </summary>
-        public static string PropertyArraySearchPattern = @"(?'Name'[\w_]+\[\])[ \t]*\+?=\s*([//\w\s]+)?\{\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?]+)?\s*\}\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertyArraySearchPattern = @"(?'Name'[\w_]+\[\])[ \t]*\+?=\s*([//\w\s]+)?\{\s*(?'Value'[\^\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?\%]+)?\s*\}\;([ \t]?\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         /// <summary>
         /// The property search pattern
         /// </summary>
-        public static string PropertySearchPattern = @"(?'Name'[\w_]+)[ \t]*=\s*(?'Value'[\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?]+)?\s*\;([ \t]*\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
+        public static string PropertySearchPattern = @"(?'Name'[\w_]+)[ \t]*=\s*(?'Value'[\^\w+\$\.\,\\*\/\""\s\-\{\}\(\)\[\]\'\?\%]+)?\s*\;([ \t]*\/[\*\/]+[ ]?(?'Remark'[\S ]+))?";
 
         /// <summary>
         /// The property replace pattern
@@ -52,7 +52,7 @@ namespace ClassForge
         /// <summary>
         /// The class close replace pattern
         /// </summary>
-        public static string ClassCloseReplacePattern = @"</Class>";
+        public static string ClassCloseReplacePattern = "</Class>\r\n";
 
         /// <summary>
         /// The block comment search pattern
@@ -67,7 +67,7 @@ namespace ClassForge
         /// <summary>
         /// The define multi search pattern
         /// </summary>
-        public static string DefineMultiSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \S\t\d\w\$\#\{_\,\+\*\/\\\=\;\-\.\""\\:\}\)\(]*\\[\s]+)+[\w _\=\#\;\""\}]+)";
+        public static string DefineMultiSearchPattern = @"#define\s+(?'Name'[\w+]+)(\((?'Argument'[\S]*)\))?\s+(?'Value'(?:[ \S\t\d\w\$\#\{_\,\+\*\/\\\=\;\-\.\""\\:\}\)\(]*\\[\s]+)+[\w _\.\,\*\/\(\)\[\]\{\}\=\#\;\""\}]+)";
 
         /// <summary>
         /// The define search pattern
