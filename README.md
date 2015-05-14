@@ -11,6 +11,16 @@ Its a .NET dll library that lets you (given a path to either a config or a folde
 
 ## Usage
 
+The library is available through NuGet:
+
+https://www.nuget.org/packages/ClassForge.dll/
+
+```
+PM> Install-Package ClassForge.dll
+```
+
+Or just find it in the NuGet Package Manager in VS.
+
 One the dll is referenced in your project you can use the three following methods:
 
 ```
