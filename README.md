@@ -1,8 +1,6 @@
 # ClassForge
 For a while now I have been trying to contruct a tool that would turn a massive amount of configs into some sort of usable class documentation automatically. ClassForge is the first step to achieve this.
 
-Note: there is no binary version available yet until I am sure that it is tested thoroughly.
-
 ## What is ClassForge?
 
 Its a .NET dll library that lets you (given a path to either a config or a folder where multiple configs are located) generate an in-memory class tree model that you can later use to do whatever you please with.
