@@ -77,7 +77,7 @@ namespace ClassForge
         /// <summary>
         /// The include search pattern
         /// </summary>
-        public static string IncludeSearchPattern = @"\#include[ \t]+\""(?'File'[\w+\.]+)\""";
+        public static string IncludeSearchPattern = @"\#include[ \t]+\""(?'File'[\w+\.\\_]+)\""";
 
         /// <summary>
         /// The empty line search pattern

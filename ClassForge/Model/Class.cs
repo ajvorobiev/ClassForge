@@ -17,11 +17,6 @@ namespace ClassForge.Model
     public class Class : ClassCollection
     {
         /// <summary>
-        /// Gets or sets the name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
         /// Gets or sets the name of the parent class.
         /// </summary>
         public string Inherits { get; set; }

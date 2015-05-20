@@ -110,14 +110,16 @@ namespace ClassForge.Model
                 exClass.Properties.AddRange(mergeClass.Properties);
             }
 
-            this.UpdateReferences();
+            //this.UpdateReferences();
         }
 
         /// <summary>
         /// Updates the model references
         /// </summary>
-        private void UpdateReferences()
+        public void UpdateReferences()
         {
+            this.ClassMap = new Dictionary<string, Class>();
+
             foreach (var cl in this.Classes)
             {
                 this.UpdateClassReference(cl, null);
@@ -135,13 +137,25 @@ namespace ClassForge.Model
         /// </param>
         private void UpdateClassReference(Class cl, Class parent)
         {
+            try
+            {
+                this.ClassMap.Add(cl.Name,cl);
+            }
+            catch (Exception)
+            {
+                //Console.WriteLine("The class named {0} already exists in classmap", cd.Name);
+            }
+
             cl.ContainmentParent = parent;
             Class inheritanceClass;
 
             if (this.ClassMap.TryGetValue(cl.Inherits, out inheritanceClass))
             {
                 cl.InheritanceClass = inheritanceClass;
-                inheritanceClass.InheritanceChildren.Add(cl);
+                if (!inheritanceClass.InheritanceChildren.Contains(cl))
+                {
+                    inheritanceClass.InheritanceChildren.Add(cl);
+                }
             }
 
             foreach (var cd in cl.Classes)

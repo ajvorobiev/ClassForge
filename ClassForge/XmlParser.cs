@@ -92,12 +92,19 @@ namespace ClassForge
                     }
                     else if (readString.Contains("<Parameter"))
                     {
-                        var newProperty = new Property();
-                        var element = XElement.Parse(readString);
-                        newProperty.Name = element.Attribute("Name").Value;
-                        newProperty.Value = element.Attribute("Value").Value;
-                        newProperty.Remark = element.Attribute("Remark").Value;
-                        store.Properties.Add(newProperty);
+                        try
+                        {
+                            var newProperty = new Property();
+                            var element = XElement.Parse(readString);
+                            newProperty.Name = element.Attribute("Name").Value;
+                            newProperty.Value = element.Attribute("Value").Value;
+                            newProperty.Remark = element.Attribute("Remark").Value;
+                            store.Properties.Add(newProperty);
+                        }
+                        catch (System.Exception ex)
+                        {
+                            // do nothing, skip this parameter, something obviously went wrong
+                        }
                     } 
                 }
             }

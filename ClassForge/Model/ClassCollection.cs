@@ -20,5 +20,10 @@ namespace ClassForge.Model
         /// Gets or sets a list of <see cref="Class"/>es
         /// </summary>
         public List<Class> Classes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the name
+        /// </summary>
+        public string Name { get; set; }
     }
 }
