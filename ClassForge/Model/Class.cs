@@ -4,6 +4,8 @@
 // </copyright>
 // <summary>
 //   The class.
+// nuget pack ClassForge.csproj -Prop Configuration=Release
+// nuget.exe push ClassForge.dll.1.6.0.nupkg
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
 
