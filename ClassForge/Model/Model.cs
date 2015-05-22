@@ -160,7 +160,7 @@ namespace ClassForge.Model
 
             foreach (var cd in cl.Classes)
             {
-                this.UpdateClassReference(cd, cl);
+                cd.UpdateReferences();
             }
         }
     }
