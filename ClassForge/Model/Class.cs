@@ -4,7 +4,7 @@
 // </copyright>
 // <summary>
 //   The class.
-// nuget pack ClassForge.csproj -Prop Configuration=Release
+// nuget pack ClassForge.csproj -Prop Configuration=Release;Platform=AnyCPU
 // nuget.exe push ClassForge.dll.1.6.0.nupkg
 // </summary>
 // --------------------------------------------------------------------------------------------------------------------
@@ -68,13 +68,27 @@ namespace ClassForge.Model
         /// <summary>
         /// Updates the model references
         /// </summary>
-        public void UpdateReferences()
+        public void UpdateReferences(Class parent)
         {
             this.ClassMap = new Dictionary<string, Class>();
 
+            this.ContainmentParent = parent;
+
             foreach (var cl in this.Classes)
             {
-                this.UpdateClassReference(cl, null);
+                try
+                {
+                    this.ClassMap.Add(cl.Name, cl);
+                }
+                catch (Exception ex)
+                {
+                    //Console.WriteLine("The class named {0} already exists in classmap", cd.Name);
+                }
+            }
+
+            foreach (var cl in this.Classes)
+            {
+                this.UpdateClassReference(cl, this);
             }
         }
 
@@ -89,30 +103,24 @@ namespace ClassForge.Model
         /// </param>
         private void UpdateClassReference(Class cl, Class parent)
         {
-            try
-            {
-                this.ClassMap.Add(cl.Name, cl);
-            }
-            catch (Exception ex)
-            {
-                //Console.WriteLine("The class named {0} already exists in classmap", cd.Name);
-            }
-
             cl.ContainmentParent = parent;
             Class inheritanceClass;
 
             if (this.ClassMap.TryGetValue(cl.Inherits, out inheritanceClass))
             {
-                cl.InheritanceClass = inheritanceClass;
-                if (!inheritanceClass.InheritanceChildren.Contains(cl))
+                if (cl != inheritanceClass)
                 {
-                    inheritanceClass.InheritanceChildren.Add(cl);
+                    cl.InheritanceClass = inheritanceClass;
+                    if (!inheritanceClass.InheritanceChildren.Contains(cl))
+                    {
+                        inheritanceClass.InheritanceChildren.Add(cl);
+                    } 
                 }
             }
 
             foreach (var cd in cl.Classes)
             {
-                cd.UpdateReferences();
+                cd.UpdateReferences(cl);
             }
         }
     }

@@ -122,7 +122,19 @@ namespace ClassForge.Model
 
             foreach (var cl in this.Classes)
             {
-                this.UpdateClassReference(cl, null);
+                try
+                {
+                    this.ClassMap.Add(cl.Name, cl);
+                }
+                catch (Exception)
+                {
+                    //Console.WriteLine("The class named {0} already exists in classmap", cd.Name);
+                }
+            }
+
+            foreach (var cl in this.Classes)
+            {
+                cl.UpdateReferences(null);
             }
         }
 
@@ -137,15 +149,6 @@ namespace ClassForge.Model
         /// </param>
         private void UpdateClassReference(Class cl, Class parent)
         {
-            try
-            {
-                this.ClassMap.Add(cl.Name,cl);
-            }
-            catch (Exception)
-            {
-                //Console.WriteLine("The class named {0} already exists in classmap", cd.Name);
-            }
-
             cl.ContainmentParent = parent;
             Class inheritanceClass;
 
@@ -160,7 +163,7 @@ namespace ClassForge.Model
 
             foreach (var cd in cl.Classes)
             {
-                cd.UpdateReferences();
+                cd.UpdateReferences(cl);
             }
         }
     }
