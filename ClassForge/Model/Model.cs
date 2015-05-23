@@ -68,7 +68,7 @@ namespace ClassForge.Model
                 classList.Add(mergeClass);
                 try
                 {
-                    this.ClassMap.Add(mergeClass.Name, mergeClass);
+                    this.ClassMap.Add(mergeClass.Name.ToLower(), mergeClass);
                 }
                 catch (Exception)
                 {
@@ -79,7 +79,7 @@ namespace ClassForge.Model
                 {
                     try
                     {
-                        this.ClassMap.Add(r.Name, r);
+                        this.ClassMap.Add(r.Name.ToLower(), r);
                     }
                     catch (Exception)
                     {
@@ -97,7 +97,7 @@ namespace ClassForge.Model
                         exClass.Classes.Add(cd);
                         try
                         {
-                            this.ClassMap.Add(cd.Name, cd);
+                            this.ClassMap.Add(cd.Name.ToLower(), cd);
                         }
                         catch (System.Exception)
                         {
@@ -124,7 +124,7 @@ namespace ClassForge.Model
             {
                 try
                 {
-                    this.ClassMap.Add(cl.Name, cl);
+                    this.ClassMap.Add(cl.Name.ToLower(), cl);
                 }
                 catch (Exception)
                 {
@@ -152,7 +152,7 @@ namespace ClassForge.Model
             cl.ContainmentParent = parent;
             Class inheritanceClass;
 
-            if (this.ClassMap.TryGetValue(cl.Inherits, out inheritanceClass))
+            if (this.ClassMap.TryGetValue(cl.Inherits.ToLower(), out inheritanceClass))
             {
                 cl.InheritanceClass = inheritanceClass;
                 if (!inheritanceClass.InheritanceChildren.Contains(cl))

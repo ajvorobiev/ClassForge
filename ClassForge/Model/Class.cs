@@ -78,7 +78,7 @@ namespace ClassForge.Model
             {
                 try
                 {
-                    this.ClassMap.Add(cl.Name, cl);
+                    this.ClassMap.Add(cl.Name.ToLower(), cl);
                 }
                 catch (Exception ex)
                 {
@@ -106,7 +106,7 @@ namespace ClassForge.Model
             cl.ContainmentParent = parent;
             Class inheritanceClass;
 
-            if (this.ClassMap.TryGetValue(cl.Inherits, out inheritanceClass))
+            if (this.ClassMap.TryGetValue(cl.Inherits.ToLower(), out inheritanceClass))
             {
                 if (cl != inheritanceClass)
                 {
