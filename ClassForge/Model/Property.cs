@@ -17,6 +17,11 @@ namespace ClassForge.Model
     public class Property
     {
         /// <summary>
+        /// Gets or sets the unique id.
+        /// </summary>
+        public Guid Iid { get; set; }
+
+        /// <summary>
         /// Gets or sets the remark.
         /// </summary>
         /// <value>
