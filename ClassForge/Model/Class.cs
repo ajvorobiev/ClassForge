@@ -14,6 +14,7 @@ using System;
 namespace ClassForge.Model
 {
     using System.Collections.Generic;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// The class.
@@ -21,8 +22,14 @@ namespace ClassForge.Model
     public class Class : ClassCollection
     {
         /// <summary>
+        /// Gets or sets the unique id.
+        /// </summary>
+        public Guid Iid { get; set; }
+
+        /// <summary>
         /// The class map.
         /// </summary>
+        [JsonIgnore]
         private Dictionary<string, Class> ClassMap;
 
         /// <summary>
@@ -33,16 +40,29 @@ namespace ClassForge.Model
         /// <summary>
         /// Gets or sets the containment parent.
         /// </summary>
+        [JsonIgnore]
         public Class ContainmentParent { get; set; }
+
+        /// <summary>
+        /// Gets or sets the containment parent iid.
+        /// </summary>
+        public Guid ContainmentParentIid { get { return this.InheritanceClass.Iid; } }
 
         /// <summary>
         /// Gets or sets the inheritance class.
         /// </summary>
+        [JsonIgnore]
         public Class InheritanceClass { get; set; }
+
+        /// <summary>
+        /// Gets or sets the inheritance class iid.
+        /// </summary>
+        public Guid InheritanceClassIid { get { return this.InheritanceClass.Iid; } }
 
         /// <summary>
         /// Gets or sets the inheritance children.
         /// </summary>
+        [JsonIgnore]
         public List<Class> InheritanceChildren { get; set; } 
 
         /// <summary>
@@ -53,6 +73,7 @@ namespace ClassForge.Model
         /// <summary>
         /// Gets or sets the list of <see cref="Property"/>'s
         /// </summary>
+        [JsonIgnore]
         public List<Property> Properties { get; set; }
 
         /// <summary>
@@ -60,6 +81,7 @@ namespace ClassForge.Model
         /// </summary>
         public Class()
         {
+            this.Iid = Guid.NewGuid();
             this.Classes = new List<Class>();
             this.Properties = new List<Property>();
             this.InheritanceChildren = new List<Class>();
@@ -73,7 +95,7 @@ namespace ClassForge.Model
             this.ClassMap = new Dictionary<string, Class>();
 
             this.ContainmentParent = parent;
-
+            
             foreach (var cl in this.Classes)
             {
                 try

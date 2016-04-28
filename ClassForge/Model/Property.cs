@@ -9,6 +9,8 @@
 
 namespace ClassForge.Model
 {
+    using System;
+
     /// <summary>
     /// The property
     /// </summary>
@@ -37,5 +39,10 @@ namespace ClassForge.Model
         /// The value.
         /// </value>
         public string Value { get; set; }
+
+        /// <summary>
+        /// Gets or sets the parent class iid.
+        /// </summary>
+        public Guid ParentClassIid { get; set; }
     }
 }
