@@ -10,6 +10,7 @@
 namespace ClassForge.Model
 {
     using System.Collections.Generic;
+    using Newtonsoft.Json;
 
     /// <summary>
     /// A collection of classes
@@ -19,6 +20,7 @@ namespace ClassForge.Model
         /// <summary>
         /// Gets or sets a list of <see cref="Class"/>es
         /// </summary>
+        [JsonIgnore]
         public List<Class> Classes { get; set; }
 
         /// <summary>

@@ -46,6 +46,7 @@
     <Compile Include="CfgSimpleParser.cs" />
     <Compile Include="Model\Class.cs" />
     <Compile Include="Model\ClassCollection.cs" />
+    <Compile Include="Model\DereferencedModel.cs" />
     <Compile Include="Model\IClassCollection.cs" />
     <Compile Include="Model\Macro.cs" />
     <Compile Include="Model\Model.cs" />

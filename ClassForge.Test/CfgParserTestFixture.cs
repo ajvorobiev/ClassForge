@@ -53,6 +53,22 @@ namespace ClassForge.Test
             Console.WriteLine(watch.ElapsedMilliseconds);
         }
 
+        [Test]
+        public void DirectoryDerefTest()
+        {
+            var parser = new CfgSimpleParser();
+            var watch = Stopwatch.StartNew();
+            var model = parser.ParseDirectoryMerged("files\\mergetest");
+            model.UpdateReferences();
+            watch.Stop();
+            DrawModel(model);
+
+            var dm = parser.GetDereferencedModel(model);
+            Console.WriteLine(dm.ToJson());
+
+            Console.WriteLine(watch.ElapsedMilliseconds);
+        }
+
         private void DrawModel(Model.Model model)
         {
             var level = 0;

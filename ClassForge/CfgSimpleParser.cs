@@ -123,6 +123,11 @@ namespace ClassForge
             return xmlParser.Parse(stringText);
         }
 
+        public DereferencedModel GetDereferencedModel(Model.Model model)
+        {
+            return new DereferencedModel(model);
+        }
+
         /// <summary>
         /// Strips empty lines
         /// </summary>

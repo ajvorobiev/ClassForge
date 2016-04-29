@@ -99,6 +99,7 @@ namespace ClassForge
                             newProperty.Name = element.Attribute("Name").Value;
                             newProperty.Value = element.Attribute("Value").Value;
                             newProperty.Remark = element.Attribute("Remark").Value;
+                            newProperty.ParentClassIid = store.Iid;
                             store.Properties.Add(newProperty);
                         }
                         catch (System.Exception ex)

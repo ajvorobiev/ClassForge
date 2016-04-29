@@ -16,6 +16,11 @@ namespace ClassForge.Model
     /// </summary>
     public class Property
     {
+        public Property()
+        {
+            this.Iid = Guid.NewGuid();
+        }
+
         /// <summary>
         /// Gets or sets the unique id.
         /// </summary>

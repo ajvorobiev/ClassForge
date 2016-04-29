@@ -46,7 +46,13 @@ namespace ClassForge.Model
         /// <summary>
         /// Gets or sets the containment parent iid.
         /// </summary>
-        public Guid ContainmentParentIid { get { return this.InheritanceClass.Iid; } }
+        public Guid ContainmentParentIid {
+            get
+            {
+                if (this.ContainmentParent == null) { return Guid.Empty;}
+                return this.ContainmentParent.Iid;
+            }
+        }
 
         /// <summary>
         /// Gets or sets the inheritance class.
@@ -57,7 +63,12 @@ namespace ClassForge.Model
         /// <summary>
         /// Gets or sets the inheritance class iid.
         /// </summary>
-        public Guid InheritanceClassIid { get { return this.InheritanceClass.Iid; } }
+        public Guid InheritanceClassIid {
+            get
+            {
+                if (this.InheritanceClass == null) { return Guid.Empty; }
+                return this.InheritanceClass.Iid;
+            } }
 
         /// <summary>
         /// Gets or sets the inheritance children.

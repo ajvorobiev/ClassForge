@@ -2,13 +2,13 @@
 <package >
   <metadata>
     <id>ClassForge.dll</id>
-    <version>1.12.0</version>
+    <version>1.13.0</version>
     <authors>Alex Vorobiev</authors>
     <owners>Alex Vorobiev</owners>
     <projectUrl>https://github.com/ajvorobiev/ClassForge</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A .NET library that lets you (given a path to either a config or a folder where multiple configs are located) generate an in-memory class tree model of an Arma game configuration file that you can later use to do whatever you please with.</description>
-    <releaseNotes>Some parsing updates and model improvements</releaseNotes>
+    <releaseNotes>Ability to create dereferenced Json models.</releaseNotes>
     <copyright>Copyright 2015 Alex Vorobiev</copyright>
     <tags>Arma Parser</tags>
     <dependencies>
