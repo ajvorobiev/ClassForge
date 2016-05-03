@@ -35,6 +35,15 @@
         }
 
         /// <summary>
+        /// Constructor.
+        /// </summary>
+        public DereferencedModel()
+        {
+            this.Classes = new List<Class>();
+            this.Properties = new List<Property>();
+        }
+
+        /// <summary>
         /// Dereferences a class.
         /// </summary>
         /// <param name="cl">The class to dereference.</param>

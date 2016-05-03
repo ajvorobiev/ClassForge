@@ -7,6 +7,12 @@
     /// </summary>
     public class DereferencedStructure
     {
+        public DereferencedStructure()
+        {
+            this.Header = new DereferencedHeader();
+            this.Model = new DereferencedModel();
+        }
+
         /// <summary>
         /// Deserializes the json into this object.
         /// </summary>
